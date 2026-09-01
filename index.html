@@ -142,7 +142,7 @@
         <div id="winTracker">Wins on current mode: 0/3</div>
         <div class="label" style="margin-top: 5px;">Apply in Order</div>
         <div id="operationList"></div>
-        <div id="status">Enter pattern...</div>
+        <div id="status"></div>
         <button id="nextButton" class="btn">Next Round →</button>
       </div>
 
@@ -392,7 +392,7 @@
         clearInterval(autoAdvanceInterval);
         nextBtn.removeAttribute('data-counted');
         
-        status.textContent = "Enter pattern...";
+        status.textContent = "";
         status.className = "";
         nextBtn.classList.remove('show');
       }
