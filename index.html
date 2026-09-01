@@ -310,9 +310,9 @@
   //  function rotateY(grid) { const res = create3DArray(); for(let y=0;y<SIZE;y++) for(let z=0;z<SIZE;z++) for(let x=0;x<SIZE;x++) res[y][x][SIZE-1-z] = grid[y][z][x]; return res; }
   //  function rotateZ(grid) { const res = create3DArray(); for(let y=0;y<SIZE;y++) for(let z=0;z<SIZE;z++) for(let x=0;x<SIZE;x++) res[x][z][SIZE-1-y] = grid[y][z][x]; return res; }
       // swap res [z] with [y]
-    function rotateX(grid) { const res = create3DArray(); for(let y=0;y<SIZE;y++) for(let z=0;z<SIZE;z++) for(let x=0;x<SIZE;x++) res[z][SIZE-1-y][x] = grid[y][z][x]; return res; }
+    function rotateX(grid) { const res = create3DArray(); for(let y=0;y<SIZE;y++) for(let z=0;z<SIZE;z++) for(let x=0;x<SIZE;x++) res[SIZE-1-z][y][x] = grid[y][z][x]; return res; }
       //swap res [z] with [x]
-    function rotateY(grid) { const res = create3DArray(); for(let y=0;y<SIZE;y++) for(let z=0;z<SIZE;z++) for(let x=0;x<SIZE;x++) res[y][x][SIZE-1-z] = grid[y][z][x]; return res; }
+    function rotateY(grid) { const res = create3DArray(); for(let y=0;y<SIZE;y++) for(let z=0;z<SIZE;z++) for(let x=0;x<SIZE;x++) res[y][SIZE-1-x][z] = grid[y][z][x]; return res; }
   
     function rotateZ(grid) { const res = create3DArray(); for(let y=0;y<SIZE;y++) for(let z=0;z<SIZE;z++) for(let x=0;x<SIZE;x++) res[x][z][SIZE-1-y] = grid[y][z][x]; return res; }
 
