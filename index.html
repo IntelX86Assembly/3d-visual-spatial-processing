@@ -379,12 +379,12 @@
           autoAdvanceInterval = setInterval(() => {
             secondsLeft--;
             if (secondsLeft > 0) status.textContent = `Correct! Next in ${secondsLeft}s...`;
-          }, 1000);
+          }, 100);
 
           clearTimeout(autoAdvanceTimeout);
           autoAdvanceTimeout = setTimeout(() => {
             startRound();
-          }, 5000);
+          }, 1000);
         }
       } else {
         clearTimeout(autoAdvanceTimeout);
