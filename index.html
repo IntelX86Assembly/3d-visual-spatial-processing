@@ -47,6 +47,51 @@
     .difficulty-select:hover { border-color: #56637a; }
 
     #winTracker { font-size: 0.75rem; color: #8e9ab0; letter-spacing: 0.05em; margin-bottom: 2px; }
+
+    .zoom-slider {
+          appearance: none;
+          -webkit-appearance: none;
+          background: transparent;
+          width: 100px;
+          height: 38px;
+          padding: 0 5px;
+          cursor: pointer;
+          pointer-events: auto;
+        }
+
+        /* Track bar styling */
+        .zoom-slider::-webkit-slider-runnable-track {
+          background: #161d2a;
+          border: 1px solid #303b4e;
+          border-radius: 6px;
+          height: 6px;
+        }
+        .zoom-slider::-moz-range-track {
+          background: #161d2a;
+          border: 1px solid #303b4e;
+          border-radius: 6px;
+          height: 6px;
+        }
+
+        /* Draggable dot / thumb styling */
+        .zoom-slider::-webkit-slider-thumb {
+          appearance: none;
+          -webkit-appearance: none;
+          width: 14px;
+          height: 22px;
+          background: #74d7ff;
+          border-radius: 4px;
+          margin-top: -8px; /* Centers thumb vertically on the 6px track */
+          cursor: pointer;
+        }
+        .zoom-slider::-moz-range-thumb {
+          width: 14px;
+          height: 22px;
+          background: #74d7ff;
+          border-radius: 4px;
+          cursor: pointer;
+          border: none;
+        }
   </style>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
@@ -74,6 +119,7 @@
     <div class="top-right">
       <button id="cheatBtn" class="btn">👁️ Cheat</button>
       <button id="resetCameraBtn" class="btn">Reset Camera</button>
+      <input type="range" id="zoomSlider" class="zoom-slider" min="5" max="25" step="0.2" value="14.73">
     </div>
     
     <div class="hud-container">
@@ -388,6 +434,30 @@
     document.getElementById('cheatBtn').addEventListener('click', () => { isCheating = !isCheating; updateVisuals(); });
     document.getElementById('resetCameraBtn').addEventListener('click', () => { camera.position.copy(defaultCameraPos); controls.target.set(0, 0, 0); controls.update(); });
     document.getElementById('nextButton').addEventListener('click', startRound);
+    const zoomSlider = document.getElementById('zoomSlider');
+    
+    zoomSlider.addEventListener('input', (e) => {
+      const targetDist = parseFloat(e.target.value);
+      const dir = camera.position.clone().sub(controls.target).normalize();
+      camera.position.copy(controls.target).add(dir.multiplyScalar(targetDist));
+      controls.update();
+    });
+
+    // Also update the slider position if the user zooms with the mouse scroll wheel
+    controls.addEventListener('change', () => {
+      const currentDist = camera.position.distanceTo(controls.target);
+      if (document.activeElement !== zoomSlider) {
+        zoomSlider.value = currentDist;
+      }
+    });
+
+    controls.addEventListener('change', () => {
+      const currentDist = camera.position.distanceTo(controls.target);
+      // Only update if you aren't currently dragging the slider manually
+      if (document.activeElement !== zoomSlider) {
+        zoomSlider.value = currentDist;
+      }
+    });
 
     const keyMap = { 
       'q':[2,0,0], 'w':[2,0,1], 'e':[2,0,2], 'a':[2,1,0], 's':[2,1,1], 'd':[2,1,2], 'z':[2,2,0], 'x':[2,2,1], 'c':[2,2,2], 
